@@ -5,8 +5,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.GridLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class LetterChoiceFragment : Fragment() {
@@ -28,21 +28,21 @@ class LetterChoiceFragment : Fragment() {
 
         // Populate the GridLayout with letters
         for (letter in letters) {
-            val textView = TextView(context).apply {
+            val button = Button(context).apply {
                 text = letter.toString()
-                textSize = 24f // You can adjust the size to your preference
+                textSize = 24f
                 gravity = Gravity.CENTER
                 layoutParams = GridLayout.LayoutParams().apply {
-                    width = 0
+                    width = GridLayout.LayoutParams.WRAP_CONTENT
                     height = GridLayout.LayoutParams.WRAP_CONTENT
-                    //weight = 1f
                 }
                 setOnClickListener {
                     it.isEnabled = false // Disable after being clicked
                     (activity as? LetterSelectedListener)?.onLetterSelected(letter)
                 }
+                contentDescription = "Button for letter $letter"
             }
-            gridLetters.addView(textView)
+            gridLetters.addView(button)
         }
     }
 

@@ -22,34 +22,45 @@ class HintFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hintCounter = savedInstanceState?.getInt("hintCounter") ?: 0
+
         hintButton = view.findViewById(R.id.btnHint)
         hintButton.setOnClickListener {
             provideHint()
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("hintCounter", hintCounter)
+    }
+
     private fun provideHint() {
         hintCounter++
         when (hintCounter) {
             1 -> {
-                // Display a hint message.
-                // This can be a Toast message or an update to some TextView.
                 Toast.makeText(context, "Hint: Some hint here.", Toast.LENGTH_SHORT).show()
             }
             2 -> {
-                // Disable half of the remaining letters that are not part of the word.
-                // Inform the main activity or controlling fragment to do so.
-                // We can also decrease the turn count.
+                (activity as? HintActionListener)?.disableHalfOfTheLetters()
             }
             3 -> {
-                // Show all the vowels and disable all vowel buttons.
-                // Inform the main activity or controlling fragment to update letter choices.
+                (activity as? HintActionListener)?.showAllVowels()
+                hintButton.isEnabled = false
             }
             else -> {
-                // If clicking the hint button would cause the user to lose the game,
-                // show a toast, "Hint not available".
                 Toast.makeText(context, "Hint not available", Toast.LENGTH_SHORT).show()
+                hintButton.isEnabled = false
             }
         }
+    }
+
+    interface HintActionListener {
+        fun disableHalfOfTheLetters()
+        fun showAllVowels()
+    }
+
+    interface HintSelectedListener {
+        fun onHintSelected(): Int
     }
 }

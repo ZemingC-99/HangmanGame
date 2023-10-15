@@ -16,7 +16,6 @@ class HangmanFragment : Fragment() {
     private val hangmanDrawables = listOf(
         R.drawable.hangman_initial,
         R.drawable.hangman_body,
-        R.drawable.hangman_body,
         R.drawable.hangman_arm_left,
         R.drawable.hangman_arm_right,
         R.drawable.hangman_leg_left,
@@ -33,7 +32,7 @@ class HangmanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateHangmanImage()
+        updateDisplay()
     }
 
     private fun updateHangmanImage() {
@@ -47,6 +46,12 @@ class HangmanFragment : Fragment() {
             currentHangmanState++
             updateHangmanImage()
         }
+    }
+
+    private fun updateDisplay() {
+        // Here you can add any logic related to updating other UI elements if you have any.
+        // For now, we're just updating the Hangman's image.
+        updateHangmanImage()
     }
 
     override fun onDestroyView() {

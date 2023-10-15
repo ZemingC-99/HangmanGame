@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.cs501.hangmangame"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.cs501.hangmangame"

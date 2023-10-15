@@ -10,11 +10,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import java.util.Locale
 
-class LetterDisplayFragment : Fragment() {
+class WordDisplayFragment : Fragment() {
 
     private lateinit var wordLayout: LinearLayout
     private var word: String = ""
     private val letterViews = mutableListOf<TextView>()
+    private var guessedLetters: Set<Char> = emptySet()  // to track guessed letters
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +29,23 @@ class LetterDisplayFragment : Fragment() {
         wordLayout = view.findViewById(R.id.wordLayout)
     }
 
-    fun setWord(newWord: String) {
+    fun setWord(newWord: String, guessedLetters: Set<Char>) {
         word = newWord.uppercase(Locale.ROOT)
+        this.guessedLetters = guessedLetters
+
         wordLayout.removeAllViews()
         letterViews.clear()
 
         for (letter in word) {
             val textView = TextView(context).apply {
-                text = "_"
+                text = if (guessedLetters.contains(letter)) letter.toString() else "_"
                 textSize = 24f
                 gravity = Gravity.CENTER
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    marginEnd = 8.dpToPx() // Convert dp to pixel
+                    marginEnd = 8.dpToPx()
                 }
             }
             wordLayout.addView(textView)
