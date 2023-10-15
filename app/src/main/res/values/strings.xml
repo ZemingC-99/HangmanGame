@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hangman Game</string>
+    <string name="hint_label">hint</string>
+    <string name="underline">_ _ _ _ _ _</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/hangmanFragment"
+        android:name="com.cs501.hangmangame.HangmanFragment"
+        android:layout_width="match_parent"
+        android:layout_height="364dp"
+        android:layout_weight="1" />
+
+    <fragment
+        android:id="@+id/wordDisplayFragment"
+        android:name="com.cs501.hangmangame.WordDisplayFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <fragment
+        android:id="@+id/letterChoiceFragment"
+        android:name="com.cs501.hangmangame.LetterChoiceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
