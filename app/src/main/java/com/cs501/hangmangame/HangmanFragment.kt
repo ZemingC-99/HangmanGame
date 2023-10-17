@@ -35,7 +35,7 @@ class HangmanFragment : Fragment() {
         updateDisplay()
     }
 
-    private fun updateHangmanImage() {
+    fun updateHangmanImage() {
         if (currentHangmanState < hangmanDrawables.size) {
             binding.hangmanImage.setImageResource(hangmanDrawables[currentHangmanState])
         }
@@ -49,8 +49,6 @@ class HangmanFragment : Fragment() {
     }
 
     private fun updateDisplay() {
-        // Here you can add any logic related to updating other UI elements if you have any.
-        // For now, we're just updating the Hangman's image.
         updateHangmanImage()
     }
 

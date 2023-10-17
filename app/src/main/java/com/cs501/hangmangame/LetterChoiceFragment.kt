@@ -1,18 +1,24 @@
 package com.cs501.hangmangame
 
 import android.os.Bundle
-import android.view.Gravity
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.GridLayout
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LetterChoiceFragment : Fragment() {
 
-    private lateinit var gridLetters: GridLayout
-    private val letters = ('A'..'Z').toList()
+    private lateinit var recyclerView: RecyclerView
+    private val letters: List<Char> = ('A'..'Z').toList()
+    private lateinit var lettersAdapter: LettersAdapter
+
+    interface OnLetterSelectedListener {
+        fun onLetterSelected(letter: Char)
+    }
+
+    private var letterSelectedListener: OnLetterSelectedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,29 +30,21 @@ class LetterChoiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gridLetters = view.findViewById(R.id.gridLetters)
-
-        // Populate the GridLayout with letters
-        for (letter in letters) {
-            val button = Button(context).apply {
-                text = letter.toString()
-                textSize = 24f
-                gravity = Gravity.CENTER
-                layoutParams = GridLayout.LayoutParams().apply {
-                    width = GridLayout.LayoutParams.WRAP_CONTENT
-                    height = GridLayout.LayoutParams.WRAP_CONTENT
-                }
-                setOnClickListener {
-                    it.isEnabled = false // Disable after being clicked
-                    (activity as? LetterSelectedListener)?.onLetterSelected(letter)
-                }
-                contentDescription = "Button for letter $letter"
-            }
-            gridLetters.addView(button)
-        }
+        recyclerView = view.findViewById(R.id.lettersRecyclerView)
+        setupRecyclerView()
     }
 
-    interface LetterSelectedListener {
-        fun onLetterSelected(letter: Char)
+    private fun setupRecyclerView() {
+        lettersAdapter = LettersAdapter(letters) { letter ->
+            // Handle letter click here
+            letterSelectedListener?.onLetterSelected(letter)
+        }
+
+        recyclerView.layoutManager = GridLayoutManager(context, 6) // 6 items in a row
+        recyclerView.adapter = lettersAdapter
+    }
+
+    fun setOnLetterClickListener(listener: OnLetterSelectedListener) {
+        this.letterSelectedListener = listener
     }
 }

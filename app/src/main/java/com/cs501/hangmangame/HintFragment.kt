@@ -39,7 +39,7 @@ class HintFragment : Fragment() {
         hintCounter++
         when (hintCounter) {
             1 -> {
-                Toast.makeText(context, "Hint: Some hint here.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Hint: Food.", Toast.LENGTH_SHORT).show()
             }
             2 -> {
                 (activity as? HintActionListener)?.disableHalfOfTheLetters()

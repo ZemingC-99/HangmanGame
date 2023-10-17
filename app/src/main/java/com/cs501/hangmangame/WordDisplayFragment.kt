@@ -53,11 +53,13 @@ class WordDisplayFragment : Fragment() {
         }
     }
 
-    fun revealLetter(letter: Char) {
-        val upperLetter = letter.uppercase(Locale.ROOT)
-        for (index in word.indices) {
-            if (word[index].toString() == upperLetter) {
-                letterViews[index].text = upperLetter
+    fun revealLetter(letters: MutableSet<Char>) {
+        for (letter in letters) {
+            val upperLetter = letter.uppercaseChar()
+            for (index in word.indices) {
+                if (word[index] == upperLetter) {
+                    letterViews[index].text = upperLetter.toString()
+                }
             }
         }
     }

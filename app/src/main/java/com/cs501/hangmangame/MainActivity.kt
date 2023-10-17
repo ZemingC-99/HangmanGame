@@ -8,31 +8,34 @@
  * 6.https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes
  * 7.https://stackoverflow.com/questions/4185507/layout-for-tablets-in-android
  * 8.https://developer.android.com/guide/fragments/communicate
+ * 9.https://developer.android.com/develop/ui/views/layout/recyclerview
  */
 package com.cs501.hangmangame
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity(), LetterChoiceFragment.LetterSelectedListener {
+class MainActivity : AppCompatActivity(), LetterChoiceFragment.OnLetterSelectedListener {
 
     private lateinit var hangmanGame: HangmanGame
     private lateinit var hangmanFragment: HangmanFragment
     private lateinit var wordDisplayFragment: WordDisplayFragment
     private lateinit var hintFragment: HintFragment
-    // Add other fragments as needed
+    private lateinit var letterChoiceFragment: LetterChoiceFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_phone)
 
         hangmanGame = HangmanGame()
+
+        letterChoiceFragment = supportFragmentManager.findFragmentById(R.id.letterChoiceFragment) as LetterChoiceFragment
         hangmanFragment = supportFragmentManager.findFragmentById(R.id.hangmanFragment) as HangmanFragment
         wordDisplayFragment = supportFragmentManager.findFragmentById(R.id.wordDisplayFragment) as WordDisplayFragment
         hintFragment = supportFragmentManager.findFragmentById(R.id.hintFragment) as HintFragment
-        // Initialize other fragments as needed
 
         setupGame()
+        setupLetterChoiceFragment()
     }
 
     private fun setupGame() {
@@ -40,22 +43,26 @@ class MainActivity : AppCompatActivity(), LetterChoiceFragment.LetterSelectedLis
         wordDisplayFragment.setWord(hangmanGame.word, hangmanGame.guessedLetters)
     }
 
-    override fun onLetterSelected(letter: Char) {
-        val isCorrect = hangmanGame.guessLetter(letter)
-        if (isCorrect) {
-            wordDisplayFragment.revealLetter(letter)
-        } else {
-            hangmanFragment.incrementHangmanState()
-        }
-
-        checkGameState()
+    private fun setupLetterChoiceFragment() {
+        val letterChoiceFragment = supportFragmentManager.findFragmentById(R.id.letterChoiceFragment) as LetterChoiceFragment
+        letterChoiceFragment.setOnLetterClickListener(this)
     }
 
     private fun checkGameState() {
         if (hangmanGame.isGameOver()) {
-            // Handle game over state. You can show a dialog or navigate to a different screen.
         }
     }
 
-    // You can also add methods to handle hint interactions and other game mechanics.
+    fun onLetterChosen(letter: Any) {
+        if (hangmanGame.guessLetter(letter)) {
+            wordDisplayFragment.revealLetter(hangmanGame.guessedLetters)
+        } else {
+            hangmanFragment.updateHangmanImage()
+        }
+        checkGameState()
+    }
+
+    override fun onLetterSelected(letter: Char) {
+        onLetterChosen(letter)
+    }
 }

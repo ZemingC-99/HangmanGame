@@ -6,8 +6,8 @@ class HangmanGame {
     var incorrectGuesses: Int = 0
     var hintState: Int = 0
 
-    fun guessLetter(letter: Char): Boolean {
-        guessedLetters.add(letter)
+    fun guessLetter(letter: Any): Boolean {
+        guessedLetters.add(letter as Char)
         return word.contains(letter)
     }
 

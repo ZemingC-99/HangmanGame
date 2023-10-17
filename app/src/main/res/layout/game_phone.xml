@@ -11,16 +11,30 @@
         android:layout_height="364dp"
         android:layout_weight="1" />
 
+    <Button
+        android:id="@+id/btnNewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="New Game" />
+
     <fragment
         android:id="@+id/wordDisplayFragment"
         android:name="com.cs501.hangmangame.WordDisplayFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="3dp"
         android:layout_weight="1" />
 
     <fragment
         android:id="@+id/letterChoiceFragment"
         android:name="com.cs501.hangmangame.LetterChoiceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="1" />
+
+    <fragment
+        android:id="@+id/hintFragment"
+        android:name="com.cs501.hangmangame.HintFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
